@@ -78,13 +78,21 @@ javascript:(function(){
   cancelButton.addEventListener('click', function() {
     document.body.removeChild(container);
   });
-  
+
   const performSearch = function() {
     const userInput = input.value.trim();
     if (userInput !== "") {
       const encodedInput = encodeURIComponent(userInput);
       const url = `https://gov-search.service.gov.uk/?selected-words=${encodedInput}&publishing-application=publisher`;
+      // Check if the current page is on the gov-search domain
+    const currentDomain = window.location.hostname;
+      if (currentDomain === "gov-search.service.gov.uk") {
+      // If already on the gov-search domain, use the current tab
+      window.location.href = url;
+    } else {
+      // If on a different domain, open in a new tab
       window.open(url, '_blank');
+    }
     }
     document.body.removeChild(container);
   };
